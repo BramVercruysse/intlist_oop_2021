@@ -15,13 +15,32 @@ import java.util.Arrays;
 
 public class IntList {
 	
+	private static class Node{
+		private int value;
+		/**
+		 * @peerObject
+		 */
+		private Node next;
+		
+		private static boolean hasLength(Node node, int length) {
+			return length == 0 ? node == null : length > 0 && node != null && hasLength(node.next, length-1);
+			//condition ? true-value: false-value
+			
+		}
+	}
+	
 	/**
-	 * @invar | elements != null
+	 * @invar | Node.hasLength(head, length)
 	 * 
 	 * @representationObject
 	 */
 	
-	private int[] elements;
+	private int length;
+	
+	/**
+	 * @representationObject
+	 */
+	private Node head;
 	
 	
 	
@@ -32,8 +51,26 @@ public class IntList {
 	 */
 	
 	public int[] getElements() {
-		return elements.clone();
-		
+		int[] result = new int[length];
+		Node node = head;
+		int i =0;
+		while(node!= null) {
+			result[i++] = node.value;
+			node = node.next;
+		}
+		return result;
+	}
+	
+	private static Node createNodes(int[] elements, int index) {
+		if (index == elements.length)
+			return null;
+		else {
+			Node head = new Node();
+			head.value = elements[index];
+			head.next = createNodes(elements, index +1);
+			return head; 
+			
+		}
 	}
 	
 	/**
@@ -46,7 +83,9 @@ public class IntList {
 	 */
 	
 	public IntList(int[] elements) {
-		this.elements = elements.clone();
+		this.head = createNodes(elements, 0);
+		this.length = elements.length;
+		;
 	}
 
 }
