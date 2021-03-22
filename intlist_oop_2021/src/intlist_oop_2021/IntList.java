@@ -15,6 +15,15 @@ import java.util.Arrays;
 
 public class IntList {
 	
+	/**
+	 * @invar | elements != null
+	 * 
+	 * @representationObject
+	 */
+	
+	private int[] elements;
+	
+	
 	
 	/**
 	 * Returns an array containing the elements of this object.
@@ -23,7 +32,7 @@ public class IntList {
 	 */
 	
 	public int[] getElements() {
-		throw new RuntimeException("Not yet implemented");
+		return elements.clone();
 		
 	}
 	
@@ -37,7 +46,7 @@ public class IntList {
 	 */
 	
 	public IntList(int[] elements) {
-		throw new RuntimeException("Not yet implemented");
+		this.elements = elements.clone();
 	}
 
 }
