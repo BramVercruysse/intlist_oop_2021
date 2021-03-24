@@ -16,35 +16,14 @@ import java.util.stream.IntStream;
 
 public class IntList {
 	
-	private static class Node{
-		private int value;
-		/**
-		 * @peerObject
-		 */
-		private Node next;
-		
-		private static boolean hasLength(Node node, int length) {
-			return length == 0 ? node == null : length > 0 && node != null && hasLength(node.next, length-1);
-			//condition ? true-value: false-value
-			
-		}
-	}
-	
 	/**
-	 * @invar | Node.hasLength(head, length)
-	 * 
+	 * @invar | elements != null
 	 * @representationObject
 	 */
 	
-	private int length;
+	private int[] elements;
 	
-	/**
-	 * @representationObject
-	 */
-	private Node head;
-	
-	
-	
+
 	/**
 	 * Returns an array containing the elements of this object.
 	 * 
@@ -52,27 +31,10 @@ public class IntList {
 	 */
 	
 	public int[] getElements() {
-		int[] result = new int[length];
-		Node node = head;
-		int i =0;
-		while(node!= null) {
-			result[i++] = node.value;
-			node = node.next;
-		}
-		return result;
+		return elements.clone();
 	}
 	
-	private static Node createNodes(int[] elements, int index) {
-		if (index == elements.length)
-			return null;
-		else {
-			Node head = new Node();
-			head.value = elements[index];
-			head.next = createNodes(elements, index +1);
-			return head; 
-			
-		}
-	}
+	
 	
 	/**
 	 * Initializes this object so that ist represents the sequaence of int values contained in the given array
@@ -84,9 +46,7 @@ public class IntList {
 	 */
 	
 	public IntList(int[] elements) {
-		this.head = createNodes(elements, 0);
-		this.length = elements.length;
-		;
+		this.elements = elements.clone();
 	}
 	
 	
@@ -111,19 +71,11 @@ public class IntList {
 	
 	
 	public void insertElement(int index, int value) {
-		Node sentinel = new Node();
-		sentinel.next = head;
-		Node node = sentinel;
-		while(0< index){
-			node = node.next;
-			index--;
-		}
-		Node newNode = new Node();
-		newNode.value = value;
-		newNode.next = node.next;
-		node.next = newNode;
-		head = sentinel.next;
-		length++;
+		int[] newElements = new int[elements.length + 1];
+		System.arraycopy(elements, 0, newElements, 0, index);
+		newElements[index]=value;
+		System.arraycopy(elements,  index,  newElements,  index + 1,  elements.length - index);
+		elements = newElements;
 	}
 	
 	/**
@@ -142,12 +94,7 @@ public class IntList {
 	 */
 	
 	public void setElement(int index, int value) {
-		Node node = head;
-		while (0 < index) {
-			node = node.next;
-			index--;
-		}
-		node.value = value;
+		elements[index] = value;
 	}
 	
 	/**
@@ -162,16 +109,11 @@ public class IntList {
 	 */
 	
 	public void removeElement(int index) {
-		Node sentinel = new Node();
-		sentinel.next = head;
-		Node node = sentinel;
-		while(0<index) {
-			node = node.next;
-			index--;
-		}
-		node.next = node.next.next;
-		head = sentinel.next;
-		length--;
+		int[] newElements = new int[elements.length -1];
+		System.arraycopy(elements, 0, newElements, 0, index);
+		System.arraycopy(elements, index+1, newElements,  index,  newElements.length - index);
+		elements = newElements;
+		
 	}
 
 }
