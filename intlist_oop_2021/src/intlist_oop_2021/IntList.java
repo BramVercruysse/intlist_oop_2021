@@ -114,9 +114,35 @@ public class IntList {
 		throw new RuntimeException("Not yet implemented");
 	}
 	
+	/**
+	 * @mutates | this
+	 * 
+	 * @pre | 0<= index && index < getElements().length
+	 * 
+	 *  @post | getElements().length == old(getElements()).length
+	 *  @post | IntStream.range(0, getElements().length).allMatch(i -> getElements()[i] == (i == index ? value : old(getElements())[i]))
+	 *  
+	 *
+	 *  
+	 * 
+	 * 
+	 * 
+	 */
+	
 	public void setElement(int index, int value) {
 		throw new RuntimeException("Not yet implemented");
 	}
+	
+	/**
+	 * @mutates | this
+	 * 
+	 * @pre | 0<= index && index < getElements().length
+	 * 
+	 * @post | getElements().length == old(getElements()).length -1
+	 * @post | IntStream.range(0, getElements().length).allMatch(i-> getElements()[i] == old(getElements())[i < index ? i: i +1])
+	 * 
+	 * 
+	 */
 	
 	public void removeElement(int index) {
 		throw new RuntimeException("Not yet implemented");
